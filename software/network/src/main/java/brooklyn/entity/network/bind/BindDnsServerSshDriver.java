@@ -111,19 +111,36 @@ public class BindDnsServerSshDriver extends AbstractSoftwareProcessSshDriver imp
 
     @Override
     public void updateBindConfiguration() {
-        copyAsRoot(entity.getConfig(BindDnsServer.NAMED_CONF_TEMPLATE), "/etc/named.conf");
-        copyAsRoot(entity.getConfig(BindDnsServer.DOMAIN_ZONE_FILE_TEMPLATE), "/var/named/domain.zone");
-        copyAsRoot(entity.getConfig(BindDnsServer.REVERSE_ZONE_FILE_TEMPLATE), "/var/named/reverse.zone");
-        int result = getMachine().execScript("restart bind", ImmutableList.of(BashCommands.sudo("service "+serviceName+" restart")));
-        LOG.info("updated named configuration and zone file for '{}' on {} (exit code {}).",
+        final boolean updatedNamed = copyAsRoot(entity.getConfig(BindDnsServer.NAMED_CONF_TEMPLATE), "/etc/named.conf");
+        final boolean updatedDomain = copyAsRoot(entity.getConfig(BindDnsServer.DOMAIN_ZONE_FILE_TEMPLATE), "/var/named/domain.zone");
+        final boolean updatedReverse = copyAsRoot(entity.getConfig(BindDnsServer.REVERSE_ZONE_FILE_TEMPLATE), "/var/named/reverse.zone");
+
+        final int result = getMachine().execScript("restart bind", ImmutableList.of(BashCommands.sudo("service "+serviceName+" restart")));
+
+        if (!updatedNamed) {
+            LOG.warn("Failed to update named configuration for '{}'. Failed to copy file on {}.", entity.getConfig(BindDnsServer.DOMAIN_NAME), entity);
+        }
+        if (!updatedDomain) {
+            LOG.warn("Failed to update zone file for '{}'. Failed to copy file on {}.", entity.getConfig(BindDnsServer.DOMAIN_NAME), entity);
+        }
+        if (!updatedReverse) {
+            LOG.warn("Failed to update reverse zone file for '{}'. Failed to copy file on {}.", entity.getConfig(BindDnsServer.DOMAIN_NAME), entity);
+        }
+
+        LOG.info("restarted BIND server with updated config for '{}' on {} (exit code {}).",
                 new Object[]{entity.getConfig(BindDnsServer.DOMAIN_NAME), entity, result});
     }
 
-    private void copyAsRoot(String template, String destination) {
+    private boolean copyAsRoot(String template, String destination) {
         String content = processTemplate(template);
         String temp = "/tmp/template-" + Strings.makeRandomId(6);
-        getMachine().copyTo(new ByteArrayInputStream(content.getBytes()), temp);
-        getMachine().execScript("copying file", ImmutableList.of(BashCommands.sudo(String.format("mv %s %s", temp, destination))));
+        final int result = getMachine().copyTo(new ByteArrayInputStream(content.getBytes()), temp);
+        if (result == 0) {
+            return getMachine().execScript("copying file", ImmutableList.of(BashCommands.sudo(String.format("mv %s %s", temp, destination)))) == 0;
+        }
+        else {
+            return false;
+        }
     }
 
 }
