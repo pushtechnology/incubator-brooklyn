@@ -198,13 +198,19 @@ public class BindDnsServerImpl extends SoftwareProcessImpl implements BindDnsSer
     private class HasHostnameAndValidLifecycle implements Predicate<Entity> {
         @Override
         public boolean apply(Entity input) {
-            switch (input.getAttribute(Attributes.SERVICE_STATE_ACTUAL)) {
+            final Lifecycle state = input.getAttribute(Attributes.SERVICE_STATE_ACTUAL);
+            if (state == null) {
+                return false;
+            }
+
+            switch (state) {
             case STOPPED:
             case STOPPING:
             case DESTROYED:
                 return false;
+            default:
+                return input.getAttribute(getConfig(HOSTNAME_SENSOR)) != null;
             }
-            return input.getAttribute(getConfig(HOSTNAME_SENSOR)) != null;
         }
     }
 
