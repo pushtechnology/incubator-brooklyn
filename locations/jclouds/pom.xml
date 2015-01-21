@@ -154,9 +154,9 @@
             <version>${jclouds.version}</version>
         </dependency>
         <dependency>
-            <groupId>${jclouds.groupId}.labs</groupId>
+            <groupId>io.cloudsoft.jclouds.labs</groupId>
             <artifactId>docker</artifactId>
-            <version>${jclouds.version}</version>
+            <version>1.8.2-alpha-cloudsoft.6</version>
         </dependency>
         <dependency>
             <groupId>${jclouds.groupId}.labs</groupId>
