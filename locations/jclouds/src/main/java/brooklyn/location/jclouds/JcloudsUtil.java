@@ -69,6 +69,7 @@ import com.google.common.annotations.Beta;
 import com.google.common.base.Charsets;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
@@ -387,6 +388,12 @@ public class JcloudsUtil implements JcloudsLocationConfig {
     }
 
     public static Map<Integer, Integer> dockerPortMappingsFor(JcloudsLocation docker, String containerId) {
+        final ComputeServiceContext existingContext = docker.getComputeService().getContext();
+        if ("docker".equals(docker.getProvider()) && existingContext != null) {
+            // Use the existing context if possible
+            return dockerPortMappingsFor(existingContext.unwrapApi(DockerApi.class), containerId);
+        }
+
         ComputeServiceContext context = null;
         try {
             Properties properties = new Properties();
@@ -398,30 +405,35 @@ public class JcloudsUtil implements JcloudsLocationConfig {
                     .overrides(properties)
                     .modules(ImmutableSet.<Module>of(new SLF4JLoggingModule(), new SshjSshClientModule()))
                     .build(ComputeServiceContext.class);
-            DockerApi api = context.unwrapApi(DockerApi.class);
-            Container container = api.getContainerApi().inspectContainer(containerId);
-            Map<Integer, Integer> portMappings = Maps.newLinkedHashMap();
-            Map<String, List<Map<String, String>>> ports = container.networkSettings().ports();
-            if (ports == null) ports = ImmutableMap.<String, List<Map<String,String>>>of();
 
-            LOG.debug("Docker will forward these ports {}", ports);
-            for (Map.Entry<String, List<Map<String, String>>> entrySet : ports.entrySet()) {
-                String containerPort = Iterables.get(Splitter.on("/").split(entrySet.getKey()), 0);
-                String hostPort = Iterables.getOnlyElement(Iterables.transform(entrySet.getValue(),
-                        new Function<Map<String, String>, String>() {
-                            @Override
-                            public String apply(Map<String, String> hostIpAndPort) {
-                                return hostIpAndPort.get("HostPort");
-                            }
-                        }));
-                portMappings.put(Integer.parseInt(containerPort), Integer.parseInt(hostPort));
-            }
-            return portMappings;
+            DockerApi api = context.unwrapApi(DockerApi.class);
+            return dockerPortMappingsFor(api, containerId);
         } finally {
             if (context != null) {
                 context.close();
             }
         }
+    }
+
+    private static Map<Integer, Integer> dockerPortMappingsFor(DockerApi api, String containerId) {
+        Container container = api.getContainerApi().inspectContainer(containerId);
+        Map<java.lang.Integer, java.lang.Integer> portMappings = Maps.newLinkedHashMap();
+        Map<String, List<Map<String, String>>> ports = container.networkSettings().ports();
+        if (ports == null) ports = ImmutableMap.<String, List<Map<String,String>>>of();
+
+        LOG.debug("Docker will forward these ports {}", ports);
+        for (Map.Entry<String, List<Map<String, String>>> entrySet : ports.entrySet()) {
+            String containerPort = Iterables.get(Splitter.on("/").split(entrySet.getKey()), 0);
+            String hostPort = Iterables.getOnlyElement(Iterables.transform(entrySet.getValue(),
+                new Function<Map<String, String>, String>() {
+                    @Override
+                    public String apply(Map<String, String> hostIpAndPort) {
+                        return hostIpAndPort.get("HostPort");
+                    }
+                }));
+            portMappings.put(java.lang.Integer.parseInt(containerPort), java.lang.Integer.parseInt(hostPort));
+        }
+        return portMappings;
     }
 
     /**
