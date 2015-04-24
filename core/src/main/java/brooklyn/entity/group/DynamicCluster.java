@@ -195,4 +195,12 @@ public interface DynamicCluster extends AbstractGroup, Cluster, MemberReplaceabl
     void setFactory(EntityFactory<?> factory);
 
     Entity addNode(Location loc, Map<?,?> extraFlags);
+
+    /**
+     * Add a node and if the Entity is {@link brooklyn.entity.trait.Startable} start it.
+     * @param loc The location
+     * @param extraFlags
+     * @return Started entity
+     */
+    Entity addAndStartNode(Location loc, Map<?,?> extraFlags);
 }
