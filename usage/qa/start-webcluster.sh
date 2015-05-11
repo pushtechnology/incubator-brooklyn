@@ -25,7 +25,7 @@
 #set -x # debug
 
 CLASS=brooklyn.qa.longevity.webcluster.WebClusterApp
-VERSION=0.7.0-DIFFUSION-SNAPSHOT # BROOKLYN_VERSION
+VERSION=0.7.0-DIFFUSION-R55-SNAPSHOT # BROOKLYN_VERSION
 
 ROOT=$(cd $(dirname $0) && pwd)
 cd $ROOT

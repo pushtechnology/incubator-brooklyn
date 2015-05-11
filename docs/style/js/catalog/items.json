@@ -3328,7 +3328,7 @@
     "effectors" : [ ]
   }, {
     "type" : "brooklyn.entity.brooklynnode.BrooklynNode",
-    "defaultVersion" : "0.7.0-DIFFUSION-SNAPSHOT",
+    "defaultVersion" : "0.7.0-DIFFUSION-R55-SNAPSHOT",
     "name" : "Brooklyn Node",
     "description" : "Deploys a Brooklyn management server",
     "iconUrl" : "",
@@ -3476,7 +3476,7 @@
       "name" : "brooklynnode.download.archive.subpath",
       "type" : "java.lang.String",
       "defaultValue" : null,
-      "description" : "Path to the main directory in the archive being supplied for installation; to use the root of an archive, specify '.'; default value if left blank is the appropriate value for brooklyn,e.g. 'brooklyn-0.7.0-DIFFUSION-SNAPSHOT'",
+      "description" : "Path to the main directory in the archive being supplied for installation; to use the root of an archive, specify '.'; default value if left blank is the appropriate value for brooklyn,e.g. 'brooklyn-0.7.0-DIFFUSION-R55-SNAPSHOT'",
       "reconfigurable" : false,
       "label" : null,
       "priority" : null,
@@ -3739,7 +3739,7 @@
     }, {
       "name" : "install.version",
       "type" : "java.lang.String",
-      "defaultValue" : "0.7.0-DIFFUSION-SNAPSHOT",
+      "defaultValue" : "0.7.0-DIFFUSION-R55-SNAPSHOT",
       "description" : "Suggested version",
       "reconfigurable" : false,
       "label" : null,

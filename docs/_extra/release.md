@@ -277,7 +277,7 @@ popd
 
 {% highlight bash %}
 
-export NEW_SNAPSHOT_VERSION=0.7.0-DIFFUSION-SNAPSHOT
+export NEW_SNAPSHOT_VERSION=0.7.0-DIFFUSION-R55-SNAPSHOT
 
 cd $BROOKLYN_DIR
 git checkout master

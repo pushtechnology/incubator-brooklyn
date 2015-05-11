@@ -383,13 +383,13 @@ public class NonDeploymentManagementContext implements ManagementContextInternal
 
     @Override
     public void prePreManage(Entity entity) {
-        // should throw?  but in 0.7.0-DIFFUSION-SNAPSHOT it was no-op
+        // should throw?  but in 0.7.0-DIFFUSION-R55-SNAPSHOT it was no-op
         log.warn("Ignoring call to prePreManage("+entity+") on "+this);
     }
 
     @Override
     public void prePreManage(Location location) {
-        // should throw?  but in 0.7.0-DIFFUSION-SNAPSHOT it was no-op
+        // should throw?  but in 0.7.0-DIFFUSION-R55-SNAPSHOT it was no-op
         log.warn("Ignoring call to prePreManage("+location+") on "+this);
     }
 

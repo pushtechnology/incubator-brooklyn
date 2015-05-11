@@ -97,7 +97,7 @@ import com.google.common.io.Files;
  * The following commands may be useful:
  * <p>
  * <code>
- * cp ~/.m2/repository/org/apache/brooklyn/brooklyn-dist/0.7.0-DIFFUSION-SNAPSHOT/brooklyn-dist-0.7.0-DIFFUSION-SNAPSHOT-dist.tar.gz ~/.brooklyn/repository/BrooklynNode/0.7.0-DIFFUSION-SNAPSHOT/BrooklynNode-0.7.0-DIFFUSION-SNAPSHOT.tar.gz
+ * cp ~/.m2/repository/org/apache/brooklyn/brooklyn-dist/0.7.0-DIFFUSION-R55-SNAPSHOT/brooklyn-dist-0.7.0-DIFFUSION-R55-SNAPSHOT-dist.tar.gz ~/.brooklyn/repository/BrooklynNode/0.7.0-DIFFUSION-R55-SNAPSHOT/BrooklynNode-0.7.0-DIFFUSION-R55-SNAPSHOT.tar.gz
  * rm -rf /tmp/brooklyn-`whoami`/installs/BrooklynNode*
  * </code>
  */

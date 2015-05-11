@@ -1,6 +1,6 @@
 path:
   # BROOKLYN_VERSION_BELOW
-  guide: /v/0.7.0-DIFFUSION-SNAPSHOT
+  guide: /v/0.7.0-DIFFUSION-R55-SNAPSHOT
   # BROOKLYN_VERSION_BELOW
-  style: /v/0.7.0-DIFFUSION-SNAPSHOT/style
+  style: /v/0.7.0-DIFFUSION-R55-SNAPSHOT/style
   website: ""

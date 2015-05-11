@@ -67,7 +67,7 @@ public class BrooklynMavenArtifactsTest {
     @Test(groups="Integration")
     public void testHistoricHosted() {
         // NB: this should be a version known to be up at sonatype or maven central, NOT necessarily the current version!
-        String snapshot = MavenRetriever.hostedUrl(MavenArtifact.fromCoordinate("org.apache.brooklyn:brooklyn-utils-common:jar:0.7.0-DIFFUSION-SNAPSHOT"));
+        String snapshot = MavenRetriever.hostedUrl(MavenArtifact.fromCoordinate("org.apache.brooklyn:brooklyn-utils-common:jar:0.7.0-DIFFUSION-R55-SNAPSHOT"));
         log.info("Sample snapshot URL is: "+snapshot);
         checkValidArchive(snapshot);
         ResourceUtils.create(this).checkUrlExists(snapshot);
@@ -80,7 +80,7 @@ public class BrooklynMavenArtifactsTest {
 
     private void checkValidArchive(final String url) {
         // Note have seen response code 500 from repository.apache.org, for
-        //   https://repository.apache.org/service/local/artifact/maven/redirect?r=snapshots&v=0.7.0-DIFFUSION-SNAPSHOT&g=org.apache.brooklyn&a=brooklyn-utils-common&e=jar
+        //   https://repository.apache.org/service/local/artifact/maven/redirect?r=snapshots&v=0.7.0-DIFFUSION-R55-SNAPSHOT&g=org.apache.brooklyn&a=brooklyn-utils-common&e=jar
         // Therefore willing to retry, rather than failing immediately.
         Asserts.succeedsEventually(new Runnable() {
             @Override public void run() {
