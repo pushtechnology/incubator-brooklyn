@@ -108,6 +108,9 @@ public abstract class AbstractGroupImpl extends AbstractEntity implements Abstra
      */
     @Override
     public boolean addMember(Entity member) {
+        final boolean changed;
+        final Entity first;
+
         synchronized (members) {
             if (Entities.isNoLongerManaged(member)) {
                 // Don't add dead entities, as they could never be removed (because addMember could be called in
@@ -117,23 +120,13 @@ public abstract class AbstractGroupImpl extends AbstractEntity implements Abstra
                 return false;
             }
 
-            // FIXME do not set sensors on members; possibly we don't need FIRST at all, just look at the first in MEMBERS, and take care to guarantee order there
-            Entity first = getAttribute(FIRST);
+            first = getAttribute(FIRST);
             if (first == null) {
-                ((EntityLocal) member).setAttribute(FIRST_MEMBER, true);
-                ((EntityLocal) member).setAttribute(FIRST, member);
                 setAttribute(FIRST, member);
-            } else {
-                if (first.equals(member) || first.equals(member.getAttribute(FIRST))) {
-                    // do nothing (rebinding)
-                } else {
-                    ((EntityLocal) member).setAttribute(FIRST_MEMBER, false);
-                    ((EntityLocal) member).setAttribute(FIRST, first);
-                }
             }
 
-            member.addGroup((Group)getProxyIfAvailable());
-            boolean changed = addMemberInternal(member);
+            member.addGroup((Group) getProxyIfAvailable());
+            changed = addMemberInternal(member);
             if (changed) {
                 log.debug("Group {} got new member {}", this, member);
                 setAttribute(GROUP_SIZE, getCurrentSize());
@@ -146,16 +139,37 @@ public abstract class AbstractGroupImpl extends AbstractEntity implements Abstra
                     if (!result.isPresent()) {
                         String nameFormat = Optional.fromNullable(getConfig(MEMBER_DELEGATE_NAME_FORMAT)).or("%s");
                         DelegateEntity child = addChild(EntitySpec.create(DelegateEntity.class)
-                                .configure(DelegateEntity.DELEGATE_ENTITY, member)
-                                .displayName(String.format(nameFormat, member.getDisplayName())));
+                            .configure(DelegateEntity.DELEGATE_ENTITY, member)
+                            .displayName(String.format(nameFormat, member.getDisplayName())));
                         Entities.manage(child);
                     }
                 }
 
                 getManagementSupport().getEntityChangeListener().onMembersChanged();
             }
-            return changed;
         }
+
+        // When an AbstractMembershipTrackingPolicy is watching the group and a rebind happens. Starting management
+        // will acquire the monitor on the EntityManagementSupport of the member and then the monitor on the current
+        // members.
+        // Setting attributes on the members will acquire the monitor on its EntityManagementSupport care needs to be
+        // taken not to create a deadlock here.
+        final EntityInternal internalMember = (EntityInternal)member;
+        synchronized (internalMember.getManagementSupport()) {
+            // FIXME: do not set sensors on members; possibly we don't need FIRST at all, just look at the first in
+            // MEMBERS, and take care to guarantee order there
+            if (first == null) {
+                internalMember.setAttribute(FIRST_MEMBER, true);
+                internalMember.setAttribute(FIRST, member);
+            }
+            else if (!first.equals(member) && !first.equals(member.getAttribute(FIRST))) {
+                internalMember.setAttribute(FIRST_MEMBER, false);
+                internalMember.setAttribute(FIRST, first);
+            }
+            // otherwise do nothing (rebinding)
+        }
+
+        return changed;
     }
 
     // visible for rebind
