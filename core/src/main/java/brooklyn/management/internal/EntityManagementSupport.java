@@ -364,7 +364,7 @@ public class EntityManagementSupport {
         }
         return nonDeploymentManagementContext.getSubscriptionContext(entity);
     }
-    public synchronized EntitlementManager getEntitlementManager() {
+    public EntitlementManager getEntitlementManager() {
         return getManagementContext().getEntitlementManager();
     }
 

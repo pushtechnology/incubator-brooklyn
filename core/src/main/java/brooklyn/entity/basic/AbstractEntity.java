@@ -1267,7 +1267,7 @@ public abstract class AbstractEntity extends AbstractBrooklynObject implements E
     }
 
     @Override
-    public synchronized SubscriptionContext getSubscriptionContext() {
+    public SubscriptionContext getSubscriptionContext() {
         return getManagementSupport().getSubscriptionContext();
     }
 
@@ -1279,7 +1279,7 @@ public abstract class AbstractEntity extends AbstractBrooklynObject implements E
     }
     
     @Override
-    public synchronized ExecutionContext getExecutionContext() {
+    public ExecutionContext getExecutionContext() {
         return getManagementSupport().getExecutionContext();
     }
 
