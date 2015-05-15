@@ -457,10 +457,14 @@ public class BasicLocationRegistry implements LocationRegistry {
             .putIfAbsentAndNotNull(LocationInternal.NAMED_SPEC_NAME, ld.getName())
             .putIfAbsentAndNotNull(LocationInternal.ORIGINAL_SPEC, ld.getName());
         Maybe<Location> result = resolve(ld.getSpec(), manage, newLocationFlags.getAllConfigRaw());
-        if (result.isPresent()) 
+        if (result.isPresent()) {
             return result;
-        throw new IllegalStateException("Cannot instantiate location '"+ld+"' pointing at "+ld.getSpec()+": "+
-            Exceptions.collapseText( ((Absent<?>)result).getException() ));
+        }
+        else {
+            final RuntimeException exception = ((Absent<Location>) result).getException();
+            throw new IllegalStateException("Cannot instantiate location '" + ld + "' pointing at " + ld.getSpec() + ": " +
+                Exceptions.collapseText(exception), exception);
+        }
     }
 
     @Override
