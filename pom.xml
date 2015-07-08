@@ -123,7 +123,8 @@
         <!-- Dependencies -->
         <brooklyn.version>0.7.0-DIFFUSION-R55-SNAPSHOT</brooklyn.version>  <!-- BROOKLYN_VERSION -->
         <jclouds.groupId>org.apache.jclouds</jclouds.groupId>
-        <jclouds.version>1.9.0</jclouds.version>
+        <jclouds.version>1.9.1-DIFFUSION-R55-SNAPSHOT</jclouds.version>
+        <jclouds.labs.version>1.9.0</jclouds.labs.version>
         <guava.version>17.0</guava.version>
         <groovy.version>2.3.4</groovy.version> <!-- Version supported by https://github.com/groovy/groovy-eclipse/wiki/Groovy-Eclipse-2.9.0-Release-Notes -->
         <logback.version>1.0.7</logback.version>

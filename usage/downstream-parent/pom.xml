@@ -46,7 +46,8 @@
     <!-- Dependencies -->
     <brooklyn.version>0.7.0-DIFFUSION-R55-SNAPSHOT</brooklyn.version>  <!-- BROOKLYN_VERSION -->
     <!-- versions should match those used by Brooklyn, to avoid conflicts -->
-    <jclouds.version>1.9.0</jclouds.version>
+    <jclouds.version>1.9.1-DIFFUSION-R55-SNAPSHOT</jclouds.version>
+    <jclouds.labs.version>1.9.0</jclouds.labs.version>
     <logback.version>1.0.7</logback.version>
     <slf4j.version>1.6.6</slf4j.version>  <!-- used for java.util.logging jul-to-slf4j interception -->
     <guava.version>17.0</guava.version>
