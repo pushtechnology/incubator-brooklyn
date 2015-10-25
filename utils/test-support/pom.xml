@@ -23,7 +23,7 @@
     <parent>
         <groupId>org.apache.brooklyn</groupId>
         <artifactId>brooklyn-parent</artifactId>
-        <version>0.9.0-DIFFUSION-R56-SNAPSHOT</version>  <!-- BROOKLYN_VERSION -->
+        <version>0.9.0-DIFFUSION-5.6.0</version>  <!-- BROOKLYN_VERSION -->
         <relativePath>../../parent/pom.xml</relativePath>
     </parent>
 
