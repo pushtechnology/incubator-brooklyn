@@ -7,7 +7,7 @@
 #
 module BrooklynMetadata
 
-  BROOKLYN_VERSION = "0.9.0-DIFFUSION-5.6.2" unless defined? BROOKLYN_VERSION
+  BROOKLYN_VERSION = "0.9.0-DIFFUSION-5.6.3" unless defined? BROOKLYN_VERSION
 
   class Generator < Jekyll::Generator
     def generate(site)

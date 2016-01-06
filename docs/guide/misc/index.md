@@ -1,6 +1,6 @@
 ---
 # BROOKLYN_VERSION_BELOW
-title: Other 0.9.0-DIFFUSION-5.6.2 Resources
+title: Other 0.9.0-DIFFUSION-5.6.3 Resources
 layout: website-normal
 children:
 - { title: Javadoc, path: javadoc/ }
