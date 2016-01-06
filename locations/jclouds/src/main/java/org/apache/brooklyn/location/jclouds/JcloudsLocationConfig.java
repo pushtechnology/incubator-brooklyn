@@ -202,6 +202,9 @@ public interface JcloudsLocationConfig extends CloudLocationConfig {
     public static final ConfigKey<String> NETWORK_NAME = ConfigKeys.newStringConfigKey(
         "networkName", "Network name or ID where the instance should be created (e.g. the subnet ID in AWS");
 
+    public static final ConfigKey<Integer> NETWORK_SPEED = ConfigKeys.newIntegerConfigKey(
+        "networkSpeed", "Network speed that should be available to the instance");
+
     /**
      * CUSTOM_MACHINE_SETUP_SCRIPT_URL accepts a URL location that points to a shell script. 
      * Please have a look at locations/jclouds/src/main/resources/org/apache/brooklyn/location/jclouds/sample/setup-server.sh as an example

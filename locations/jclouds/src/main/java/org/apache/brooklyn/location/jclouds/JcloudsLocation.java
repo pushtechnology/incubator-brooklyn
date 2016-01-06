@@ -1381,6 +1381,14 @@ public class JcloudsLocation extends AbstractCloudMachineProvisioningLocation im
                         }
                     }
                 }})
+            .put(NETWORK_SPEED, new CustomizeTemplateOptions() {
+                @Override
+                public void apply(TemplateOptions t, ConfigBag props, Object v) {
+                    if (t instanceof SoftLayerTemplateOptions) {
+                        ((SoftLayerTemplateOptions)t).portSpeed((Integer) v);
+                    }
+                }
+            })
             .build();
 
     /** hook whereby template customizations can be made for various clouds */
