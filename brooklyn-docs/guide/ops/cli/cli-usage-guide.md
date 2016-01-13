@@ -27,14 +27,14 @@ is running on `localhost`; change the URL and credentials as necessary.
 {% highlight text %}
 $ br login http://localhost:8081 admin
 Enter Password: *
-Connected to Brooklyn version 0.9.0-SNAPSHOT at http://localhost:8081
+Connected to Brooklyn version 0.9.0-DIFFUSION-SNAPSHOT at http://localhost:8081
 {% endhighlight %}
 
 The version of the connected Brooklyn server may be viewed with the `version` command:
 
 {% highlight text %}
 $ br version
-0.9.0-SNAPSHOT
+0.9.0-DIFFUSION-SNAPSHOT
 {% endhighlight %}
 
 ## Applications
