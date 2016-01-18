@@ -2740,11 +2740,13 @@ public class JcloudsLocation extends AbstractCloudMachineProvisioningLocation im
                     "get public AWS hostname",
                     ImmutableList.of(
                             BashCommands.INSTALL_CURL,
-                            "echo `curl --silent --retry 20 http://169.254.169.254/latest/meta-data/public-hostname`; exit"));
+                            "echo `curl --silent --retry 20 http://169.254.169.254/latest/meta-data/public-ipv4`; exit"));
             String outString = new String(outStream.toByteArray());
             String[] outLines = outString.split("\n");
             for (String line : outLines) {
-                if (line.startsWith("ec2-")) return line.trim();
+                if (Networking.isValidIp4(line.trim())) {
+                    return line.trim();
+                }
             }
             throw new IllegalStateException("Could not obtain aws-ec2 hostname for vm "+sshHostAndPort+"; exitcode="+exitcode+"; stdout="+outString+"; stderr="+new String(errStream.toByteArray()));
         } finally {
