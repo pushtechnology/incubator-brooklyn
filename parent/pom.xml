@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.apache.brooklyn</groupId>
         <artifactId>brooklyn</artifactId>
-        <version>0.9.0-DIFFUSION-5.6.4-1</version>  <!-- BROOKLYN_VERSION -->
+        <version>0.9.0-DIFFUSION-5.6.6</version>  <!-- BROOKLYN_VERSION -->
     </parent>
 
     <artifactId>brooklyn-parent</artifactId>
@@ -67,12 +67,12 @@
         <surefire.failIfNoSpecifiedTests>false</surefire.failIfNoSpecifiedTests>
 
         <!-- Dependencies -->
-        <brooklyn.version>0.9.0-DIFFUSION-5.6.4-1</brooklyn.version>  <!-- BROOKLYN_VERSION -->
+        <brooklyn.version>0.9.0-DIFFUSION-5.6.6</brooklyn.version>  <!-- BROOKLYN_VERSION -->
         <jclouds.groupId>org.apache.jclouds</jclouds.groupId> <!-- JCLOUDS_GROUPID_VERSION -->
 
         <!-- These dependencies also appear in usage/downstream-parent/pom.xml -
            - please synchronise versions between these two pom files -->
-        <jclouds.version>1.9.2-DIFFUSION-5.6.0</jclouds.version> <!-- JCLOUDS_VERSION -->
+        <jclouds.version>1.9.2-DIFFUSION-5.6.6</jclouds.version> <!-- JCLOUDS_VERSION -->
         <jclouds.labs.version>1.9.1</jclouds.labs.version>
         <logback.version>1.0.7</logback.version>
         <slf4j.version>1.6.6</slf4j.version>  <!-- used for java.util.logging jul-to-slf4j interception -->
